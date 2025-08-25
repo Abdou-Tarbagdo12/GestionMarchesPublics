@@ -1,0 +1,161 @@
+package main;
+
+import model.MarchésPublics ;
+import model.MarchésPublics.Statut ;
+import model.Entreprise;
+import service .MarchésPublicService;
+import service.EntrepriseService;
+
+
+import java.time.LocalDate ;
+import java.util.Scanner; 
+
+
+public class Main {
+	public static void main(String[] args) {
+		Scanner sc = new
+				Scanner(System.in);
+		MarchésPublicService
+		marchésService = new
+		MarchésPublicService();
+			EntrepriseService
+			enrepriseService = new
+			EntrepriseService();
+			
+			
+			int choix;
+			do {
+				System.out.println("/n=== MENU PRINCIPAL ===");
+				System.out.println("1. Ajouter les marchés");
+				System.out.println("2. Lister des marchés");
+				System.out.println("3. Supprimer un marché");
+				System.out.println("4. Ajouter une entrprise");
+				System.out.println("5. Lister les entreprises");
+				System.out.println("0. Quitter");
+				System.out.println("votre choix : ");
+				choix = sc.nextInt();
+				sc.nextLine(); // vider buffer
+				
+				switch (choix ) {
+				case 1:
+			System.out.print(" titre : ");
+								String titre = sc.nextLine();
+								
+			System.out.print(" Description : ");
+								String desc = sc.nextLine();
+								
+			System.out.println("Budget :");
+								double budget = sc.nextDouble();
+								sc.next().lines();
+								
+			System.out.print("Date debut (AAA-MM-JJ) :");
+								LocalDate debut = LocalDate.parse(sc.nextLine());
+								
+			System.out.print("Date fin (AAA-MM-JJ) :");
+								LocalDate fin = LocalDate.parse(sc.nextLine());
+								
+								marchésService.ajouterMarchés(
+								MarchésPublics(titre,desc, budget, debut, fin, Statut.Ouvert)
+								);
+								
+			System.out.println(" Marchés ajouter avec succès !");
+					break;
+					
+				case 2 :
+					
+			System.out.println("===Lister des marchés===");
+			
+			marchésService.listerMarchés(). forEach(System.out::println);
+						break;
+						
+				case 3:
+			System.out.print("Index du marché à supprimer");
+								int idxM = sc.nextInt();
+								marchésService.supprimerMarcheés(idxM);
+						break;
+						
+				case 4:
+			System.out.print("Nom : ");
+					String nom = sc.nextLine();
+					
+			System.out.print("Adresse : ");
+						String adresse = sc.nextLine();
+			System.out.print("Téléphone : ");
+						String tel = sc.nextLine();
+			System.out.print("Qualifiez ? (true/false) : ");
+						boolean qualifiée = sc.nextBoolean();
+						
+						enrepriseService.ajouterEntreprise(new
+						Entreprise(nom, adresse, tel, qualifiée)
+						);
+			System.out.println("entreprises ajouter ! ");
+						break;
+						
+				case 5:
+					
+			System.out.println("=== Liste des entreprises=== ");
+					
+			enrepriseService.listerEntreprises().forEach(System.out::println);
+							break;
+							
+				case 0:
+					
+					System.out.println("Au revoir ! ");
+					break;
+					
+					default:
+						
+						System.out.println("Choix invalide ! ");
+				}
+				} while (choix != 0);
+				sc.close();
+							
+					
+			System.out.println("=== Listedes entreprises === : ");
+			
+			
+				
+	}
+		
+		// Service
+		MarchésPublicService service = new MarchésPublicService() ;
+		
+		
+		// Creation de marchés
+				MarchésPublics m1 = new
+	MarchésPublics( 
+			 		 "Constructions d'une école primaire" ,
+			 		"travaux de six (06) salles de classe et de blocs administratif et des latrines" ,
+			 		10_527_325,
+			 		LocalDate .of (2025, 9, 1),
+			 		LocalDate .of (2026,3, 20),
+			 		Statut .Ouvert
+			 		);
+				MarchésPublics m2 = new
+						MarchésPublics(
+									"Réhabilitation d'un hopital ",
+								"Travaux de mordernisation",
+								300_000_000,
+								LocalDate .of(2025, 11, 20),
+								LocalDate .of(2026,10, 28),
+								Statut .En_Evalution
+								);
+				
+				// Ajouter dans le service
+				service.ajouterMarchés(m1);
+				service.ajouterMarchés(m2);
+				
+				// Affichage
+				System .out .println("=== Liste des marchés ===")
+				
+				service . listerMarchés(). forEach(System . out ::println);
+				
+				// Supression du 1er marchés 
+				service . supprimerMarcheés(0);
+				System . out .println("=== Après suppression ===");
+				
+				service . listerMarchés() . forEach(System . out :: println);
+
+	}
+
+}

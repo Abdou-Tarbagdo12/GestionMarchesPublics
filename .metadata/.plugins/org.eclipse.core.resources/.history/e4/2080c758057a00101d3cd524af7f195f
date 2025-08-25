@@ -1,0 +1,55 @@
+package main;
+
+import model.MarchésPublics ;
+import model.MarchésPublics.Statut ;
+import model . Entreprise;
+import service .MarchésPublicService;
+
+
+import java.time.LocalDate ;
+
+public class Main {
+	public static void main(String[] args) {
+		
+		// Service
+		MarchésPublicService service = new MarchésPublicService() ;
+		
+		
+		// Creation de marchés
+				MarchésPublics m1 = new
+	MarchésPublics( 
+			 		 "Constructions d'une école primaire" ,
+			 		"travaux de six (06) salles de classe et de blocs administratif et des latrines" ,
+			 		10_527_325,
+			 		LocalDate .of (2025, 9, 1),
+			 		LocalDate .of (2026,3, 20),
+			 		Statut .Ouvert
+			 		);
+				MarchésPublics m2 = new
+						MarchésPublics(
+									"Réhabilitation d'un hopital ",
+								"Travaux de mordernisation",
+								300_000_000,
+								LocalDate .of(2025, 11, 20),
+								LocalDate .of(2026,10, 28),
+								Statut .En_Evalution
+								);
+				
+				// Ajouter dans le service
+				service. ajouterMarchés(m1);
+				service . ajouterMarchés(m2);
+				
+				// Affichage
+				System .out .println("=== Liste des marchés ===");
+				
+				service . listerMarchés(). forEach(System . out ::println);
+				
+				// Supression du 1er marchés 
+				service . supprimerMarchés(0);
+				System . out .println("=== Après suppression ===");
+				
+				service . listerMarchés() . forEach(System . out :: println);
+
+	}
+
+}

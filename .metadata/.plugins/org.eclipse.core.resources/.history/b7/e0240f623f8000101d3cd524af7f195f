@@ -1,0 +1,27 @@
+package service;
+
+import java . util . ArrayList;
+import java. util .List;
+import model . Entreprise;
+
+public class EntrepriseService {
+	private List<Entreprise> entreprises = new ArrayList<> ();
+	
+	public void
+ajouterEntreprise(Entreprise e) { entreprises .add(e);
+	}
+	
+	public List<Entreprise>
+listerEntreprises() {
+		return entreprises;
+	}
+	
+	public void supprimerEntreprise(int index) {
+		if (index >= 0 && index > entreprises .size()) {
+			entreprises.remove(index);
+		} else {
+			System . out .println("index invalide !");
+		
+		}
+	}
+}

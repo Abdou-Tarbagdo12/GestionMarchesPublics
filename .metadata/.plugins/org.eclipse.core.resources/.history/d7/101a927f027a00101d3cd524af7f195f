@@ -1,0 +1,23 @@
+package main;
+
+import model.MarchésPublics ;
+import model.MarchésPublics.Statut ;
+import java.time.LocalDate ;
+
+public class Main {
+
+	public static void main(String[] args) {
+	 MarchésPublics mp = new
+			 MarchésPublics(
+			 		 "Constructions d'une école primaire" ,
+			 		"travaux de six (06) salles de classe et de blocs administratif et des latrines" ,
+			 		10_527_325,
+			 		LocalDate .of (2025, 9, 1),
+			 		LocalDate .of (2026,3, 20),
+			 		Statut .Ouvert
+			 		);
+			 		System. out . println(mp);
+
+	}
+
+}

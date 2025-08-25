@@ -1,0 +1,29 @@
+package service;
+
+import model.MarchePublic;
+import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
+
+public class MarcheService {
+    private List<MarchePublic> marches = new ArrayList<>();
+
+    public void ajouterMarche(String titre, String description, double budget, LocalDate debut, LocalDate fin) {
+        MarchePublic m = new MarchePublic(titre, description, budget, debut, fin, "ouvert");
+        marches.add(m);
+    }
+
+    public List<MarchePublic> getMarches() {
+        return marches;
+    }
+
+    public void afficherMarches() {
+        if (marches.isEmpty()) {
+            System.out.println("Aucun marché trouvé.");
+        } else {
+            for (MarchePublic m : marches) {
+                System.out.println(m);
+            }
+        }
+    }
+}

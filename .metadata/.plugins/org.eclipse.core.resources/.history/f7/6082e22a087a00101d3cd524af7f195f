@@ -1,0 +1,47 @@
+package model;
+
+public class Entreprise {
+	private String nom;
+	private String adresse;
+	private String téléphone;
+	private boolean qualifiez; // true = qualifiée, false = non qualifiée
+
+public Entreprise() {}
+
+public Entreprise(String nom, String adresse, String téléphone, Boolean qualifiez,) { 
+	this.nom = nom;
+	this.adresse = adresse;
+	this.téléphone = téléphone;
+	this.qualifiez = qualifiez;
+}
+
+
+public String getNom() { return nom;}
+public void setNom(String nom)
+{ this.nom= nom; }
+
+public String getAdresse() { return adresse; }
+public void setAdesse(String adesse)
+{this.adresse = adesse;}
+
+public String getTéléphone()
+{ return téléphone; }
+public void setTéléphone(String téléphone)
+{this.téléphone = téléphone; }
+
+public boolean isQualifiez()
+{ return qualifiez; }
+public void setQualifiez(boolean qualifiez) {this.qualifiez =qualifiez; }
+
+		@Override
+		public String toString() {
+			return "Entreprise{" + 
+					"nom='" + '/'' +
+					", adresse= '" + adesse + '/'' +
+					", téléphone='" + téléphone + '/'' +
+					", qualifiez='" + qualifiez + 
+					'}'
+					
+		}
+
+}

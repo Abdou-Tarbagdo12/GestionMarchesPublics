@@ -1,0 +1,164 @@
+package main;
+
+import model.*;
+import service.*;
+import Exeception.EntityNotFoundException;
+
+import java.time.LocalDate;
+import java.util.List;
+import java.util.Scanner;
+
+public class MainConsole {
+    public static void main(String[] args) {
+        MarcheService marcheService = new MarcheService();
+        EntrepriseService entrepriseService = new EntrepriseService();
+        PropositionService propositionService = new PropositionService();
+        ContratService contratService = new ContratService();
+
+        Scanner sc = new Scanner(System.in);
+        boolean exit = false;
+
+        while (!exit) {
+            System.out.println("\n=== Gestion des Marchés Publics ===");
+            System.out.println("1. Gestion des Marchés");
+            System.out.println("2. Gestion des Entreprises");
+            System.out.println("3. Gestion des Propositions");
+            System.out.println("4. Gestion des Contrats");
+            System.out.println("5. Quitter");
+            System.out.print("Choisir une option: ");
+            int choix = sc.nextInt();
+            sc.nextLine(); // Consommer la fin de ligne
+
+            switch (choix) {
+                case 1 -> menuMarches(marcheService, sc);
+                case 2 -> menuEntreprises(entrepriseService, sc);
+                case 3 -> menuPropositions(propositionService, marcheService, entrepriseService, sc);
+                case 4 -> menuContrats(contratService, marcheService, entrepriseService, sc);
+                case 5 -> exit = true;
+                default -> System.out.println("Option invalide !");
+            }
+        }
+
+        sc.close();
+        System.out.println("Au revoir !");
+    }
+
+    // Menu Marchés
+    private static void menuMarches(MarcheService service, Scanner sc) {
+        System.out.println("\n--- Marchés ---");
+        System.out.println("1. Ajouter un marché");
+        System.out.println("2. Afficher tous les marchés");
+        System.out.println("3. Fermer un marché");
+        System.out.print("Choisir une option: ");
+        int choix = sc.nextInt();
+        sc.nextLine();
+
+        switch (choix) {
+            case 1 -> {
+                System.out.print("Titre: "); String titre = sc.nextLine();
+                System.out.print("Description: "); String desc = sc.nextLine();
+                System.out.print("Budget: "); double budget = sc.nextDouble();
+                sc.nextLine();
+                System.out.print("Date début (AAAA-MM-JJ): "); LocalDate dd = LocalDate.parse(sc.nextLine());
+                System.out.print("Date fin (AAAA-MM-JJ): "); LocalDate df = LocalDate.parse(sc.nextLine());
+                try {
+                    service.ajouterMarche(new MarchePublic(titre, desc, budget, dd, df, "Ouvert"));
+                } catch (IllegalArgumentException e) {
+                    System.out.println("Erreur: " + e.getMessage());
+                }
+            }
+            case 2 -> service.afficherMarches();
+            case 3 -> {
+                System.out.print("Titre du marché à fermer: "); 
+                String titre = sc.nextLine();
+                service.fermerMarche(titre);
+            }
+            default -> System.out.println("Option invalide !");
+        }
+    }
+
+    // Menu Entreprises
+    private static void menuEntreprises(EntrepriseService service, Scanner sc) {
+        System.out.println("\n--- Entreprises ---");
+        System.out.println("1. Ajouter une entreprise");
+        System.out.println("2. Afficher toutes les entreprises");
+        System.out.print("Choisir une option: ");
+        int choix = sc.nextInt();
+        sc.nextLine();
+
+        switch (choix) {
+            case 1 -> {
+                System.out.print("Nom: "); String nom = sc.nextLine();
+                System.out.print("Adresse: "); String adresse = sc.nextLine();
+                System.out.print("Téléphone: "); String tel = sc.nextLine();
+                System.out.print("Statut: "); String statut = sc.nextLine();
+                try {
+                    service.ajouterEntreprise(new Entreprise(nom, adresse, tel, statut));
+                } catch (IllegalArgumentException e) {
+                    System.out.println("Erreur: " + e.getMessage());
+                }
+            }
+            case 2 -> service.afficherEntreprises();
+            default -> System.out.println("Option invalide !");
+        }
+    }
+
+    // Menu Propositions
+    private static void menuPropositions(PropositionService service, MarcheService ms, EntrepriseService es, Scanner sc) {
+        System.out.println("\n--- Propositions ---");
+        System.out.println("1. Ajouter une proposition");
+        System.out.println("2. Afficher toutes les propositions");
+        System.out.print("Choisir une option: ");
+        int choix = sc.nextInt();
+        sc.nextLine();
+
+        switch (choix) {
+            case 1 -> {
+                System.out.print("Nom de l'entreprise: "); String nomE = sc.nextLine();
+                System.out.print("Titre du marché: "); String titreM = sc.nextLine();
+                System.out.print("Montant proposé: "); double montant = sc.nextDouble();
+                sc.nextLine();
+                System.out.print("Date soumission (AAAA-MM-JJ): "); LocalDate ds = LocalDate.parse(sc.nextLine());
+                System.out.print("Statut: "); String statut = sc.nextLine();
+                try {
+                    Entreprise e = es.rechercherEntreprise(nomE);
+                    MarchePublic m = ms.rechercherMarche(titreM);
+                    service.ajouterProposition(new Proposition(e, m, montant, ds, statut));
+                } catch (EntityNotFoundException | IllegalArgumentException e) {
+                    System.out.println("Erreur: " + e.getMessage());
+                }
+            }
+            case 2 -> service.afficherPropositions();
+            default -> System.out.println("Option invalide !");
+        }
+    }
+
+    // Menu Contrats
+    private static void menuContrats(ContratService service, MarcheService ms, EntrepriseService es, Scanner sc) {
+        System.out.println("\n--- Contrats ---");
+        System.out.println("1. Ajouter un contrat");
+        System.out.println("2. Afficher tous les contrats");
+        System.out.print("Choisir une option: ");
+        int choix = sc.nextInt();
+        sc.nextLine();
+
+        switch (choix) {
+            case 1 -> {
+                System.out.print("Nom de l'entreprise: "); String nomE = sc.nextLine();
+                System.out.print("Titre du marché: "); String titreM = sc.nextLine();
+                System.out.print("Date début (AAAA-MM-JJ): "); LocalDate dd = LocalDate.parse(sc.nextLine());
+                System.out.print("Date fin (AAAA-MM-JJ): "); LocalDate df = LocalDate.parse(sc.nextLine());
+                System.out.print("Suivi: "); String suivi = sc.nextLine();
+                try {
+                    Entreprise e = es.rechercherEntreprise(nomE);
+                    MarchePublic m = ms.rechercherMarche(titreM);
+                    service.ajouterContrat(new Contrat(e, m, dd, df, suivi));
+                } catch (EntityNotFoundException | IllegalArgumentException e) {
+                    System.out.println("Erreur: " + e.getMessage());
+                }
+            }
+            case 2 -> service.afficherContrats();
+            default -> System.out.println("Option invalide !");
+        }
+    }
+}

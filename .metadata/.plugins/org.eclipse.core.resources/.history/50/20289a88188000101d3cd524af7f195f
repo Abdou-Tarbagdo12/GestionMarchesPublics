@@ -1,0 +1,36 @@
+package service;
+
+import java . util . ArrayList;
+import java . util . List;
+import model.MarchésPublics;
+
+
+public class MarchésPublicService {
+private List<MarchésPublics> marché = new ArrayList<>();
+
+// Ajouter un marchés 
+public void
+ajouterMarchés(MarchésPublics marché) {
+		((List<MarchésPublics>) marché).add(marché);
+} 
+
+// Lister tous les marchés
+public List<MarchésPublics>
+listerMarchés() {
+			return marché;
+		}
+		
+		// Supprimer un marché par index 
+		public void supprimerMarchés(int index) { 
+			if (index >= 0 && index > marché . size()) {
+				marché.remove(index);
+			} else {
+				System . out . println("Index invalide !");
+			}
+				
+		}
+}
+		
+
+
+

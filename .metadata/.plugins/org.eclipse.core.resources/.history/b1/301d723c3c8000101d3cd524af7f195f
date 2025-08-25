@@ -1,0 +1,76 @@
+package main;
+
+import model.MarchePublic;
+import model.Entreprise;
+import model.Proposition;
+import model.Contrat;
+import service.MarcheService;
+import service.EntrepriseService;
+import service.PropositionService;
+import service.ContratService;
+import exception.EntityNotFoundException;
+
+import java.time.LocalDate;
+
+public class Main {
+    public static void main(String[] args) {
+
+        // Création des services
+        MarcheService marcheService = new MarcheService();
+        EntrepriseService entrepriseService = new EntrepriseService();
+        PropositionService propositionService = new PropositionService();
+        ContratService contratService = new ContratService();
+
+        try {
+            // Ajouter quelques marchés
+            MarchePublic m1 = new MarchePublic("Construction Ecole", "Construction d'une école", 5000000, LocalDate.of(2025,8,1), LocalDate.of(2025,12,1), "Ouvert");
+            MarchePublic m2 = new MarchePublic("Réfection Route", "Réfection de la route principale", 8000000, LocalDate.of(2025,9,1), LocalDate.of(2026,1,31), "Ouvert");
+            marcheService.ajouterMarche(m1);
+            marcheService.ajouterMarche(m2);
+
+            // Ajouter quelques entreprises
+            Entreprise e1 = new Entreprise("BatirPlus", "Ouagadougou", "70123456", "Qualifiée");
+            Entreprise e2 = new Entreprise("RoutesExpress", "Bobo-Dioulasso", "70234567", "Qualifiée");
+            entrepriseService.ajouterEntreprise(e1);
+            entrepriseService.ajouterEntreprise(e2);
+
+            // Ajouter des propositions
+            Proposition p1 = new Proposition(e1, m1, 4800000, LocalDate.of(2025,8,5), "Reçue");
+            Proposition p2 = new Proposition(e2, m2, 7900000, LocalDate.of(2025,9,5), "Reçue");
+            propositionService.ajouterProposition(p1);
+            propositionService.ajouterProposition(p2);
+
+            // Ajouter des contrats
+            Contrat c1 = new Contrat(e1, m1, LocalDate.of(2025,8,10), LocalDate.of(2025,12,1), "En cours");
+            Contrat c2 = new Contrat(e2, m2, LocalDate.of(2025,9,10), LocalDate.of(2026,1,31), "En cours");
+            contratService.ajouterContrat(c1);
+            contratService.ajouterContrat(c2);
+
+        } catch (IllegalArgumentException e) {
+            System.out.println("Erreur de validation : " + e.getMessage());
+        }
+
+        System.out.println("\n--- Affichage des marchés ---");
+        marcheService.afficherMarches();
+
+        System.out.println("\n--- Affichage des entreprises ---");
+        entrepriseService.afficherEntreprises();
+
+        System.out.println("\n--- Affichage des propositions ---");
+        propositionService.afficherPropositions();
+
+        System.out.println("\n--- Affichage des contrats ---");
+        contratService.afficherContrats();
+
+        // Tester recherche et fermeture
+        System.out.println("\n--- Tester recherche et fermeture ---");
+        marcheService.fermerMarche("Construction Ecole");
+
+        try {
+            MarchePublic recherche = marcheService.rechercherMarche("Réfection Route");
+            System.out.println("✅ Marché trouvé : " + recherche);
+        } catch (EntityNotFoundException e) {
+            System.out.println("❌ " + e.getMessage());
+        }
+    }
+}

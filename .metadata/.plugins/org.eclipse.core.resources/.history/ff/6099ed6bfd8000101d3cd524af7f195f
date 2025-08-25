@@ -1,0 +1,37 @@
+package service;
+
+import model.Proposition;
+import exception.EntityNotFoundException;
+
+import java.util.ArrayList;
+import java.util.List;
+
+public class PropositionService {
+    private List<Proposition> propositions = new ArrayList<>();
+
+    public void ajouterProposition(Proposition proposition) {
+        if (proposition == null) {
+            throw new IllegalArgumentException("La proposition ne peut pas être null.");
+        }
+        propositions.add(proposition);
+    }
+
+    public void afficherPropositions() {
+        if (propositions.isEmpty()) {
+            System.out.println("Aucune proposition enregistrée.");
+        } else {
+            for (Proposition p : propositions) {
+                System.out.println(p);
+            }
+        }
+    }
+
+    public Proposition rechercherProposition(double montant) throws EntityNotFoundException {
+        for (Proposition p : propositions) {
+            if (p.getMontantPropose() == montant) {
+                return p;
+            }
+        }
+        throw new EntityNotFoundException("Aucune proposition trouvée avec le montant : " + montant);
+    }
+}

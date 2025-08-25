@@ -1,0 +1,10 @@
+package exception;
+
+// Cette classe permet de créer une exception spécifique quand une entité n'est pas trouvée
+public class EntityNotFoundException extends Exception {
+
+    // Constructeur qui reçoit un message
+    public EntityNotFoundException(String message) {
+        super(message); // Appelle le constructeur de Exception
+    }
+}
