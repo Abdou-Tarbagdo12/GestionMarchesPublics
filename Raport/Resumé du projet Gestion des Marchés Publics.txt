@@ -1,0 +1,94 @@
+# Gestion des Marchés Publics
+
+## Objectif
+Développer une application Java pour la **gestion des marchés publics** permettant de :
+- Créer et gérer les marchés publics.
+- Enregistrer et consulter les entreprises.
+- Suivre les propositions des entreprises.
+- Gérer les contrats attribués.
+
+##  Fonctionnalités
+- Ajouter, rechercher et lister les marchés publics.
+- Enregistrer les entreprises participantes.
+- Enregistrer et consulter les propositions.
+- Créer et gérer les contrats.
+- Gestion d’erreurs avec des exceptions 
+
+##  Technologies utilisées
+- **Langage** : Java
+- **IDE** : Eclipse
+
+
+
+docs/conception.md
+#  Documentation de Conception
+
+
+## 1. Diagramme de classes
+- **MarchePublic**
+- **Entreprise**
+- **Proposition**
+- **Contrat**
+
+## 2. Relations
+- Un marché peut avoir plusieurs propositions.
+- Une entreprise peut soumettre plusieurs propositions.
+- Un contrat lie une entreprise et un marché.
+
+## 3. Services
+- `MarcheService` : gestion des marchés publics.
+- `EntrepriseService` : gestion des entreprises.
+- `PropositionService` : gestion des propositions.
+- `ContratService` : gestion des contrats.
+
+## 4. Exceptions
+- `EntityNotFoundException` pour gérer les entités inexistantes.
+- `ValidationException` pour les erreurs de validat
+
+
+#  Documentation Utilisateur
+
+## 1. Installation
+1. Télécharger le projet depuis GitHub.
+2. Importer le projet dans **Eclipse** ou **IntelliJ IDEA**.
+3. Compiler et exécuter la classe `Main`.
+
+## 2. Exécution
+Lancer la classe principale `Main.java` :
+- Ajout de marchés publics.
+- Ajout d’entreprises.
+- Ajout de propositions.
+- Attribution des contrats.
+- Affichage des listes et tests d’exceptions.
+
+## 3. Resultat apres execution
+✅ Marché ajouté : Construction Ecole  
+✅ Entreprise ajoutée : BatirPlus  
+✅ Proposition ajoutée pour le marché : Construction Ecole  
+✅ Contrat ajouté pour le marché : Construction Ecole  
+❌ Marché non trouvé : Marché Inexistan
+
+
+#  Rapport de Projet
+
+## 1. Introduction
+Ce projet a été réalisé dans le cadre de l’apprentissage du langage **Java** et de la conception orientée objet.
+
+## 2. Objectifs
+- Comprendre la programmation orientée objet.
+- Manipuler des entités et leurs relations.
+- Appliquer les principes de la gestion des exceptions.
+
+
+## 3. Réalisation
+- Conception des entités principales.
+- Développement des services associés.
+- Mise en place d’exceptions.
+- Réalisation d’une classe `Main` de test.
+- Export du projet en **JAR**.
+
+## 4. Résultats
+L’application permet de gérer  les marchés publics, les entreprises, les propositions et les contrats avec des vérifications et exceptions.
+
+## 5. Conclusion
+Le projet a permis de mettre en pratique les bases de la **programmation Java orientée objet**
